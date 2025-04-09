@@ -1,0 +1,195 @@
+{% extends "layout/base.html" %}
+
+{% block main_content %}
+    {% load static %}
+    <style>
+        /* Chat Container */
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #ddd;
+            padding: 15px;
+            height: 500px;
+            background-color: #f9f9f9;
+            overflow-y: auto;
+            border-radius: 10px;
+        }
+
+        /* Message Styling */
+        .message {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        /* Message Box Styling */
+        .message-box {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-box.user {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            text-align: right;
+        }
+
+        .message-box.bot {
+            background-color: #f8d7da;
+            color: #842029;
+            text-align: left;
+        }
+
+        /* Icon Styling */
+        .icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 0 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon.user {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .icon.bot {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        /* Chat Input */
+        #chat-input {
+            margin-top: 10px;
+            display: flex;
+        }
+
+        #user-message {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        #send-button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #send-button:hover {
+            background-color: #0b5ed7;
+        }
+    </style>
+
+    <div class="main-content-inner">
+        <div class="row">
+            <div class="col-lg-10 col-ml-12">
+                <div class="row">
+                    <!-- Chatbot Section Start -->
+                    <div class="col-12 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title">Live Chat</h4>
+                                
+
+                                <div id="chat-container">
+                                    <!-- Default Welcome Message -->
+                                    <div class="message bot">
+                                        <div class="icon bot">
+                                            <i class="fas fa-headset"></i>
+                                        </div>
+                                        <div class="message-box bot">
+                                            Hi there! How can I help you today?
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="chat-input">
+                                    <input type="text" id="user-message" name="message" placeholder="Type your message here..." required>
+                                    <button id="send-button" type="button">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Chatbot Section End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_content %}
+    <script src="{% static 'assets/js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to add messages to the chat box
+            function appendMessage(message, sender) {
+                const messageContainer = $('<div>').addClass('message').addClass(sender);
+                const icon = $('<div>').addClass('icon').addClass(sender).html(
+                    sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-headset"></i>'
+                );
+                const messageBox = $('<div>').addClass('message-box').addClass(sender).text(message);
+
+                messageContainer.append(sender === 'user' ? messageBox : icon)
+                                .append(sender === 'user' ? icon : messageBox);
+
+                $('#chat-container').append(messageContainer);
+                $('#chat-container').scrollTop($('#chat-container')[0].scrollHeight); // Scroll to the bottom
+            }
+
+            // Handle sending messages
+            $('#send-button').on('click', function() {
+                const userMessage = $('#user-message').val();
+
+                if (userMessage) {
+                    appendMessage(userMessage, 'user'); // Add user message to the chat
+                    $('#user-message').val('');  // Clear input field
+                    
+                    // Send the message to the backend
+                    $.ajax({
+                        url: "{% url 'help' %}",  // URL for the 'help' view
+                        method: "POST",
+                        data: {
+                            'message': userMessage,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'  // CSRF token for security
+                        },
+                        success: function(response) {
+                            appendMessage(response.bot_reply, 'bot'); // Add bot reply to the chat
+                        },
+                        error: function(error) {
+                            console.log("Error:", error);
+                        }
+                    });
+                }
+            });
+
+            // Enable Enter key to send messages
+            $('#user-message').on('keypress', function(e) {
+                if (e.which === 13) {
+                    $('#send-button').click();
+                }
+            });
+        });
+    </script>
+{% endblock %}

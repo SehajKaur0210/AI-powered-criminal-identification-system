@@ -1,0 +1,92 @@
+{
+        "intents": [
+            {
+                "tag": "greeting",
+                "patterns": ["Hi there", "Hello", "Is anyone there?", "Hey", "Hola", "Good day"],
+                "responses": ["Hello, how can I assist you?", "Hi there, what do you need help with?", "Greetings! How can I help?"],
+                "context": [""]
+            },
+            {
+                "tag": "goodbye",
+                "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+                "responses": ["Goodbye! Take care.", "See you soon!", "Bye! Let us know if you need more help."],
+                "context": [""]
+            },
+            {
+                "tag": "thanks",
+                "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for your assistance"],
+                "responses": ["You're welcome!", "Glad I could help!", "Anytime!"],
+                "context": [""]
+            },
+            {
+                "tag": "noanswer",
+                "patterns": [],
+                "responses": ["Sorry, I didn't catch that.", "Could you clarify?", "I'm not sure I understand. Could you rephrase?"],
+                "context": [""]
+            },
+            {
+                "tag": "options",
+                "patterns": ["What can you do?", "How can you help?", "What support is offered?", "What services are available?"],
+                "responses": [
+                    "I can assist with crime reporting, criminal tracking, providing feedback, and user support.",
+                    "Available services include reporting crimes, searching for criminals, and answering your questions."
+                ],
+                "context": [""]
+            },
+            {
+                "tag": "user_registration",
+                "patterns": ["How do I register?", "Sign up process", "How to create an account?", "User registration help"],
+                "responses": ["You can register by providing your details on the Sign-Up page.", "Head to the registration page to create an account."],
+                "context": [""]
+            },
+            {
+                "tag": "report_crime",
+                "patterns": ["How to report a crime?", "Submit a crime report", "Report an incident", "File a complaint"],
+                "responses": ["You can report a crime via the 'Report Crime' section.", "Provide details of the incident on the crime report form."],
+                "context": [""]
+            },
+            {
+                "tag": "view_crime_reports",
+                "patterns": ["How to view crime reports?", "See submitted reports", "Access crime data"],
+                "responses": ["Navigate to the 'Crime Reports' section to view submitted reports.", "You can check crime data under the reports menu."],
+                "context": [""]
+            },
+            {
+                "tag": "search_criminals",
+                "patterns": ["Search for criminals", "Locate suspects", "Find criminal records", "How to track suspects?"],
+                "responses": ["Use the 'Search Criminals' option to locate suspects.", "Enter details to search for criminal records."],
+                "context": [""]
+            },
+            {
+                "tag": "feedback",
+                "patterns": ["How to provide feedback?", "Submit feedback", "Give suggestions"],
+                "responses": ["You can submit your feedback in the 'Feedback' section.", "We'd love to hear from you! Use the feedback form to share your thoughts."],
+                "context": [""]
+            },
+            {
+                "tag": "ask_questions",
+                "patterns": ["I have a question", "Can you help me with something?", "Ask a question", "Need clarification"],
+                "responses": ["Sure, feel free to ask!", "What do you need help with?"],
+                "context": [""]
+            },
+            {
+                "tag": "track_location",
+                "patterns": ["How to track a criminal's location?", "Locate a suspect", "Find location details"],
+                "responses": ["We use secure methods to track locations based on available data.", "Location tracking can be initiated via authorized personnel."],
+                "context": [""]
+            },
+            {
+                "tag": "identify_suspect",
+                "patterns": ["How to identify a suspect?", "Suspect identification process", "Recognize a criminal"],
+                "responses": ["Criminal identification is done using facial recognition and evidence analysis.", "Provide details to assist in suspect identification."],
+                "context": [""]
+            },
+            {
+                "tag": "community_contribution",
+                "patterns": ["How can I contribute to the community?", "Ways to help", "Get involved"],
+                "responses": ["You can contribute by reporting crimes and providing feedback.", "Support us by spreading awareness and sharing your insights."],
+                "context": [""]
+            }
+        ]
+    }
+    
